@@ -1,27 +1,32 @@
 import React from "react";
-import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { COLORS, EASE, FONT, SPRING } from "../theme";
+import {
+  AbsoluteFill,
+  Img,
+  staticFile,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
+import { COLORS, EASE, FONT, PHOTOS, SPRING } from "../theme";
 import { Background, rgba } from "../components/Background";
 import { Grain, Vignette } from "../components/Grain";
 import { Stage } from "../components/Stage";
 import { DashboardFrame } from "../components/DashboardFrame";
-import { EquipmentIcon, EquipmentName } from "../components/Equipment";
 import { Headline } from "../components/AnimatedText";
 import { eased, springScale } from "../animations";
 
 /**
  * SCENE 3 — SOLUTION (5–10s)
- * "Everything your kitchen needs." A Casselin catalogue console: core units snap
- * into a steel grid in rapid sequence — fryer, grill, oven, toaster, bain-marie
- * and more — each on its own milled tile with a part label.
+ * "Everything your kitchen needs." A Casselin catalogue console: real product
+ * photography snaps into a steel grid in rapid sequence — snacking, cooking,
+ * preparation, buffet, cold, washing — each a graded tile with a range label.
  */
-const ITEMS: { name: EquipmentName; label: string }[] = [
-  { name: "fryer", label: "Fryer" },
-  { name: "grill", label: "Grill" },
-  { name: "oven", label: "Oven" },
-  { name: "toaster", label: "Toaster" },
-  { name: "bainmarie", label: "Bain-marie" },
-  { name: "griddle", label: "Griddle" },
+const TILES: { src: string; label: string }[] = [
+  { src: PHOTOS.snack, label: "Snacking" },
+  { src: PHOTOS.ligne700, label: "Cooking" },
+  { src: PHOTOS.preparation, label: "Preparation" },
+  { src: PHOTOS.buffet, label: "Buffet" },
+  { src: PHOTOS.froid, label: "Cold" },
+  { src: PHOTOS.laverie, label: "Washing" },
 ];
 
 export const Scene03Solution: React.FC = () => {
@@ -30,21 +35,21 @@ export const Scene03Solution: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      <Background tint="cold" intensity={0.8} />
+      <Background tint="cold" intensity={0.75} />
       <Stage>
         <AbsoluteFill
           style={{
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
-            gap: 70,
-            padding: 80,
+            gap: 64,
+            padding: 70,
           }}
         >
           <Headline
             text="Everything your kitchen needs."
             delay={4}
-            size={86}
+            size={84}
             tone="steel"
             maxWidth={860}
             stagger={3}
@@ -54,58 +59,87 @@ export const Scene03Solution: React.FC = () => {
             label="CASSELIN · CATALOGUE"
             status="IN STOCK"
             style={{
-              width: 880,
+              width: 900,
               opacity: eased(frame, [10, 22], [0, 1], EASE.expo),
-              transform: `scale(${springScale(frame, fps, { delay: 10, from: 0.94, to: 1 })})`,
+              transform: `scale(${springScale(frame, fps, { delay: 10, from: 0.95, to: 1 })})`,
             }}
           >
             <div
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(3, 1fr)",
-                gap: 22,
-                padding: 30,
+                gap: 16,
+                padding: 22,
               }}
             >
-              {ITEMS.map((it, i) => {
+              {TILES.map((t, i) => {
                 const delay = 20 + i * 7;
                 const s = springScale(frame, fps, {
                   delay,
-                  from: 0.7,
+                  from: 0.78,
                   to: 1,
                   preset: SPRING.snappy,
                 });
                 const op = eased(frame, [delay, delay + 10], [0, 1], EASE.expo);
                 return (
                   <div
-                    key={it.name}
+                    key={t.label}
                     style={{
-                      borderRadius: 16,
-                      padding: "26px 18px 20px",
-                      background: `linear-gradient(160deg, ${rgba(COLORS.steelHi, 0.06)}, ${rgba(
-                        COLORS.steelDark,
-                        0.06,
-                      )})`,
-                      border: `1px solid ${rgba(COLORS.steel, 0.16)}`,
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      gap: 10,
+                      position: "relative",
+                      height: 220,
+                      borderRadius: 14,
+                      overflow: "hidden",
+                      border: `1px solid ${rgba(COLORS.steel, 0.2)}`,
                       opacity: op,
                       transform: `scale(${s})`,
                     }}
                   >
-                    <EquipmentIcon name={it.name} size={150} />
+                    <Img
+                      src={staticFile(t.src)}
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        filter: "saturate(0.8) contrast(1.05) brightness(0.9)",
+                      }}
+                    />
                     <div
                       style={{
+                        position: "absolute",
+                        inset: 0,
+                        background: `linear-gradient(180deg, transparent 40%, ${rgba(
+                          COLORS.base,
+                          0.85,
+                        )} 100%)`,
+                      }}
+                    />
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: 16,
+                        bottom: 14,
                         fontFamily: FONT.family,
                         fontSize: 24,
-                        fontWeight: 600,
-                        letterSpacing: 1,
-                        color: COLORS.inkSoft,
+                        fontWeight: 700,
+                        letterSpacing: 0.5,
+                        color: COLORS.ink,
                       }}
                     >
-                      {it.label}
+                      <span
+                        style={{
+                          display: "inline-block",
+                          width: 8,
+                          height: 8,
+                          borderRadius: 99,
+                          background: i % 2 ? COLORS.red : COLORS.cold,
+                          marginRight: 10,
+                          verticalAlign: "middle",
+                          boxShadow: `0 0 10px ${i % 2 ? COLORS.red : COLORS.cold}`,
+                        }}
+                      />
+                      {t.label}
                     </div>
                   </div>
                 );

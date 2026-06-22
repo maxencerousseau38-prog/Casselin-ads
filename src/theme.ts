@@ -58,13 +58,16 @@ export const COLORS = {
   steelDark: "#39424E",
   steelLine: "rgba(174, 185, 199, 0.16)",
 
-  // Cold controlled light (the "engineering" glow).
-  cold: "#5AA9FF",
-  coldBright: "#86C8FF",
+  // Real Casselin brand spectrum (sampled from the logo): tricolore blue + red.
+  brandBlue: "#234E9E", // logo bracket blue
+  brandRed: "#DD1232", //  logo bracket red
 
-  // Casselin signature red — used sparingly, with intent.
-  red: "#E12A1E",
-  redBright: "#FF4334",
+  // Accent glows (brighter, for light on the dark canvas). `cold`/`red` names
+  // are kept so shared components keep reading the same tokens.
+  cold: "#3E73D6", // brand blue, brightened for glow
+  coldBright: "#5E92F0",
+  red: "#DD1232", // brand red
+  redBright: "#FF3350",
 
   glassFill: "rgba(255, 255, 255, 0.04)",
   glassStroke: "rgba(255, 255, 255, 0.10)",
@@ -77,9 +80,26 @@ export const GRADIENTS = {
   steelEdge: `linear-gradient(120deg, ${COLORS.steelHi} 0%, ${COLORS.steelMid} 30%, ${COLORS.steelDark} 55%, ${COLORS.steel} 78%, ${COLORS.steelHi} 100%)`,
   cold: `linear-gradient(120deg, ${COLORS.coldBright} 0%, ${COLORS.cold} 100%)`,
   accent: `linear-gradient(120deg, ${COLORS.redBright} 0%, ${COLORS.red} 100%)`,
+  // Tricolore brand sweep (blue → red) — a nod to the logo / "fabricant français".
+  brand: `linear-gradient(120deg, ${COLORS.cold} 0%, ${COLORS.coldBright} 42%, ${COLORS.redBright} 100%)`,
   text: `linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.74) 100%)`,
   textSteel: `linear-gradient(180deg, ${COLORS.steelHi} 0%, ${COLORS.steel} 55%, ${COLORS.steelMid} 100%)`,
 } as const;
+
+/** Real brand image assets (in /public/brand). */
+export const PHOTOS = {
+  snack: "brand/univers-snack.jpg",
+  preparation: "brand/univers-preparation.jpg",
+  buffet: "brand/univers-buffet.jpg",
+  froid: "brand/univers-froid.jpg",
+  laverie: "brand/univers-laverie.jpg",
+  hygiene: "brand/univers-hygiene.jpg",
+  ligne600: "brand/univers-ligne600.jpg",
+  ligne700: "brand/univers-ligne700.jpg",
+  familial: "brand/univers-familial.jpg",
+} as const;
+
+export const LOGO = "brand/logo-white.png";
 
 export const FONT = {
   family:

@@ -1,31 +1,30 @@
 import React from "react";
-import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { COLORS, EASE, FONT } from "../theme";
+import {
+  AbsoluteFill,
+  Img,
+  staticFile,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
+import { COLORS, EASE, FONT, PHOTOS, SPRING } from "../theme";
 import { Background, rgba } from "../components/Background";
 import { Grain, Vignette } from "../components/Grain";
 import { Stage } from "../components/Stage";
-import { EquipmentIcon, EquipmentName } from "../components/Equipment";
 import { Headline } from "../components/AnimatedText";
 import { eased, springScale } from "../animations";
 
 /**
  * SCENE 5 — COMPLETE ECOSYSTEM (15–20s)
- * "Cooking. Preparation. Cold. Hygiene." The full Casselin range, segmented like
- * a digital catalogue: four ranges reveal in sequence, each a steel row of its
- * core units, with the matching word igniting as its row lands.
+ * "Cooking. Preparation. Cold. Hygiene." The four pillars of the Casselin range,
+ * each a real graded photograph in a steel cell, igniting in sequence with its
+ * word and an accent index — the whole CHR kitchen, end to end.
  */
-const RANGES: {
-  word: string;
-  accent: string;
-  items: EquipmentName[];
-}[] = [
-  { word: "Cooking.", accent: COLORS.red, items: ["fryer", "grill", "oven"] },
-  { word: "Preparation.", accent: COLORS.cold, items: ["slicer", "mixer", "panini"] },
-  { word: "Cold.", accent: COLORS.coldBright, items: ["fridge", "display"] },
-  { word: "Hygiene.", accent: COLORS.steel, items: ["dishwasher"] },
+const CELLS: { src: string; word: string; accent: string }[] = [
+  { src: PHOTOS.ligne700, word: "Cooking.", accent: COLORS.red },
+  { src: PHOTOS.preparation, word: "Preparation.", accent: COLORS.cold },
+  { src: PHOTOS.froid, word: "Cold.", accent: COLORS.coldBright },
+  { src: PHOTOS.laverie, word: "Hygiene.", accent: COLORS.steel },
 ];
-
-const ROW_DELAY = 18;
 
 export const Scene05Ecosystem: React.FC = () => {
   const frame = useCurrentFrame();
@@ -33,83 +32,97 @@ export const Scene05Ecosystem: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      <Background tint="cold" intensity={0.8} />
+      <Background tint="cold" intensity={0.7} />
       <Stage>
         <AbsoluteFill
           style={{
             justifyContent: "center",
-            alignItems: "stretch",
+            alignItems: "center",
             flexDirection: "column",
-            gap: 26,
-            padding: "150px 90px",
+            gap: 44,
+            padding: "120px 80px",
           }}
         >
-          <Headline
-            text="One complete ecosystem."
-            delay={2}
-            size={70}
-            tone="steel"
-            style={{ marginBottom: 24 }}
-          />
+          <Headline text="One complete ecosystem." delay={2} size={72} tone="steel" />
 
-          {RANGES.map((r, i) => {
-            const delay = 14 + i * ROW_DELAY;
-            const op = eased(frame, [delay, delay + 12], [0, 1], EASE.expo);
-            const x = eased(frame, [delay, delay + 16], [60, 0], EASE.expo);
-            return (
-              <div
-                key={r.word}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 28,
-                  padding: "20px 28px",
-                  borderRadius: 18,
-                  background: `linear-gradient(120deg, ${rgba(r.accent, 0.07)}, ${rgba(
-                    COLORS.steelHi,
-                    0.03,
-                  )})`,
-                  border: `1px solid ${rgba(COLORS.steel, 0.14)}`,
-                  borderLeft: `4px solid ${r.accent}`,
-                  opacity: op,
-                  transform: `translateX(${x}px)`,
-                }}
-              >
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gridTemplateRows: "1fr 1fr",
+              gap: 18,
+              width: "100%",
+              flex: 1,
+              maxHeight: 1180,
+            }}
+          >
+            {CELLS.map((c, i) => {
+              const delay = 14 + i * 12;
+              const op = eased(frame, [delay, delay + 12], [0, 1], EASE.expo);
+              const s = springScale(frame, fps, {
+                delay,
+                from: 0.9,
+                to: 1,
+                preset: SPRING.panel,
+              });
+              const kb = eased(frame, [delay, delay + 140], [1.12, 1], EASE.soft);
+              return (
                 <div
+                  key={c.word}
                   style={{
-                    width: 320,
-                    fontFamily: FONT.family,
-                    fontSize: 52,
-                    fontWeight: 800,
-                    letterSpacing: -1.5,
-                    color: COLORS.ink,
+                    position: "relative",
+                    borderRadius: 18,
+                    overflow: "hidden",
+                    border: `1px solid ${rgba(COLORS.steel, 0.18)}`,
+                    borderBottom: `4px solid ${c.accent}`,
+                    opacity: op,
+                    transform: `scale(${s})`,
                   }}
                 >
-                  {r.word}
+                  <Img
+                    src={staticFile(c.src)}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      transform: `scale(${kb})`,
+                      filter: "saturate(0.8) contrast(1.05) brightness(0.88)",
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: `linear-gradient(180deg, transparent 35%, ${rgba(
+                        COLORS.base,
+                        0.88,
+                      )} 100%)`,
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: 26,
+                      bottom: 24,
+                      fontFamily: FONT.family,
+                      fontSize: 50,
+                      fontWeight: 800,
+                      letterSpacing: -1.5,
+                      color: COLORS.ink,
+                      textShadow: `0 2px 20px ${rgba(COLORS.base, 0.8)}`,
+                    }}
+                  >
+                    {c.word}
+                  </div>
                 </div>
-                <div style={{ display: "flex", gap: 8, flex: 1, justifyContent: "flex-end" }}>
-                  {r.items.map((name, j) => {
-                    const id = delay + 6 + j * 5;
-                    const s = springScale(frame, fps, { delay: id, from: 0.6, to: 1 });
-                    return (
-                      <div
-                        key={name}
-                        style={{
-                          opacity: eased(frame, [id, id + 10], [0, 1], EASE.expo),
-                          transform: `scale(${s})`,
-                        }}
-                      >
-                        <EquipmentIcon name={name} size={118} />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </AbsoluteFill>
       </Stage>
-      <Vignette strength={0.55} />
+      <Vignette strength={0.5} />
       <Grain />
     </AbsoluteFill>
   );

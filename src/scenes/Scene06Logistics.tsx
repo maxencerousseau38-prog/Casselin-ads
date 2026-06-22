@@ -41,7 +41,7 @@ export const Scene06Logistics: React.FC = () => {
           style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 150 }}
         >
           <div style={{ textAlign: "center" }}>
-            <Kicker text="Stock · Delivery · Service" delay={2} />
+            <Kicker text="French manufacturer · Stock · Service" delay={2} />
             <div style={{ height: 20 }} />
             <Headline text="Shipped across Europe." delay={6} size={78} tone="ink" maxWidth={820} />
           </div>

@@ -1,68 +1,37 @@
 import React from "react";
-import { COLORS, FONT, GRADIENTS } from "../theme";
+import { Img, staticFile } from "remotion";
+import { COLORS, LOGO } from "../theme";
 import { rgba } from "./Background";
 
 /**
- * Casselin wordmark lockup.
+ * Casselin brand lockup — the real logo.
  *
- * Industrial uppercase type, wide engineered tracking, a milled steel finish
- * and a single red index mark — the kind of mark you'd see laser-etched on a
- * stainless unit. Used in the opening stamp and the closing brand lockup.
+ * The official white "CASSELIN" wordmark inside its tricolore bracket frame
+ * (blue + red), as used on the brand's own site. Rendered from the downloaded
+ * asset with a soft cold halo so it sits cleanly on the dark industrial canvas.
+ * Native aspect ratio ≈ 4.99:1.
  */
 export const Wordmark: React.FC<{
-  size?: number;
-  mark?: boolean;
+  width?: number;
+  glow?: boolean;
   style?: React.CSSProperties;
-}> = ({ size = 150, mark = true, style }) => {
+}> = ({ width = 720, glow = true, style }) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: size * 0.18,
-        ...style,
-      }}
-    >
-      {mark && (
-        <div
-          style={{
-            width: size * 0.5,
-            height: size * 0.5,
-            borderRadius: size * 0.1,
-            background: GRADIENTS.accent,
-            boxShadow: `0 0 ${size * 0.3}px ${rgba(COLORS.red, 0.55)}, inset 0 2px 0 ${rgba(
-              "#FFFFFF",
-              0.3,
-            )}`,
-            position: "relative",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              inset: size * 0.12,
-              borderRadius: size * 0.04,
-              border: `2px solid ${rgba("#FFFFFF", 0.8)}`,
-            }}
-          />
-        </div>
-      )}
-      <span
+    <div style={{ position: "relative", width, ...style }}>
+      <Img
+        src={staticFile(LOGO)}
         style={{
-          fontFamily: FONT.family,
-          fontWeight: 800,
-          fontSize: size,
-          letterSpacing: size * 0.04,
-          lineHeight: 1,
-          backgroundImage: GRADIENTS.textSteel,
-          WebkitBackgroundClip: "text",
-          backgroundClip: "text",
-          color: "transparent",
-          textShadow: `0 2px 30px ${rgba(COLORS.cold, 0.18)}`,
+          width: "100%",
+          height: "auto",
+          display: "block",
+          filter: glow
+            ? `drop-shadow(0 6px 40px ${rgba(COLORS.cold, 0.35)}) drop-shadow(0 2px 10px ${rgba(
+                COLORS.base,
+                0.6,
+              )})`
+            : "none",
         }}
-      >
-        CASSELIN
-      </span>
+      />
     </div>
   );
 };

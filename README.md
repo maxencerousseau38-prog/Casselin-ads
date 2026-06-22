@@ -4,11 +4,15 @@ A 30-second advertisement for **Casselin**, the French manufacturer of professio
 kitchen equipment for fast food, snacking, hotels and the wider CHR market. Built
 with [Remotion](https://www.remotion.dev/).
 
+It uses the **real brand identity** pulled from [casselin.com](https://www.casselin.com/fr/):
+the official **logo**, the real **tricolore brand colours** (blue `#234E9E` + red
+`#DD1232`, sampled from the logo) and the real **product photography** (`/public/brand`).
+
 The direction targets the visual language of premium industrial brands — **Bosch
 Professional, Siemens, Electrolux B2B**: cold controlled light, brushed stainless
-steel, an engineering-dashboard UI, a single precise Casselin-red accent, spring
-physics and **never** a linear animation. Every frame is engineered to read
-"premium European industrial leader".
+steel, real graded photography, an engineering-dashboard UI, spring physics and
+**never** a linear animation. Every frame is engineered to read "premium French
+industrial leader".
 
 **Masters:** `AdVideo` 1080×1920 (9:16) · `AdVideoWide` 1920×1080 (16:9) · 30 fps ·
 900 frames · H.264 (MP4). Both render from one timeline.
@@ -51,15 +55,17 @@ src/
     Background.tsx         Industrial canvas: cold light pools + blueprint grid (+ rgba helper)
     Grain.tsx              Film grain + cinematic vignette
     Stage.tsx              Adaptive 1080×1920 design canvas → drives both aspect ratios
+    Photo.tsx              Graded real-photo Ken Burns + engineering CornerTicks
     SteelPanel.tsx         Brushed stainless-steel surface
     DashboardFrame.tsx     Engineering-dashboard chrome (titled control surface)
     Telemetry.tsx          Radial Gauge / Readout / Bar instrumentation
-    Equipment.tsx          12 stainless-steel equipment illustrations (pure SVG)
+    Equipment.tsx          Vector stainless-steel equipment icons (used as accents)
     EuropeMap.tsx          France-hub → Europe logistics flow network
-    Wordmark.tsx           CASSELIN milled-steel lockup with red index mark
+    Wordmark.tsx           The real Casselin logo asset with a soft cold halo
     AnimatedText.tsx       Word-by-word Headline + Kicker (ink / steel / cold / accent tones)
   scenes/
     Scene01Impact.tsx … Scene07Brand.tsx
+public/brand/              Real Casselin logo + product photography (from casselin.com)
 public/fonts/              Vendored Inter woff2 weights (source for fonts.ts)
 scripts/generate-fonts.mjs Regenerates src/fonts.ts from the woff2 files
 ```
