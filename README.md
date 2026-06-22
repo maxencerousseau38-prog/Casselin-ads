@@ -1,13 +1,19 @@
-# Casselin — Premium SaaS Video Ad (Remotion)
+# Casselin — Industrial Premium Video Ad (Remotion)
 
-A 30-second, vertical **9:16** advertisement for an AI website builder, built with
-[Remotion](https://www.remotion.dev/). The direction targets the visual language of
-Apple keynotes, Stripe and Tesla ads: deep canvas, soft brand gradients,
-glassmorphism, light blooms, spring physics and **never** a linear animation.
+A 30-second advertisement for **Casselin**, the French manufacturer of professional
+kitchen equipment for fast food, snacking, hotels and the wider CHR market. Built
+with [Remotion](https://www.remotion.dev/).
 
-**Format:** 1080 × 1920 · 30 fps · 900 frames · H.264 (MP4).
+The direction targets the visual language of premium industrial brands — **Bosch
+Professional, Siemens, Electrolux B2B**: cold controlled light, brushed stainless
+steel, an engineering-dashboard UI, a single precise Casselin-red accent, spring
+physics and **never** a linear animation. Every frame is engineered to read
+"premium European industrial leader".
 
-![Hook](previews/f01-hook.png)
+**Masters:** `AdVideo` 1080×1920 (9:16) · `AdVideoWide` 1920×1080 (16:9) · 30 fps ·
+900 frames · H.264 (MP4). Both render from one timeline.
+
+![Impact](previews/01-impact.png)
 
 > Scene posters: [`previews/`](previews) — one representative frame per scene.
 
@@ -19,13 +25,15 @@ glassmorphism, light blooms, spring physics and **never** a linear animation.
 npm install
 
 npm run studio        # open Remotion Studio (live preview / scrubbing)
-npm run render        # render the full ad → out/casselin-ad.mp4
-npm run render:hd     # higher-quality master (PNG frames, crf 16)
-npm run still         # export the poster frame → out/poster.png
+npm run render        # render the vertical 9:16 master → out/casselin-ad-9x16.mp4
+npm run render:wide   # render the 16:9 master        → out/casselin-ad-16x9.mp4
+npm run render:all    # render both masters
+npm run render:hd     # higher-quality vertical master (PNG frames, crf 16)
+npm run still         # export the brand-stamp poster → out/poster.png
 npm run typecheck     # strict TypeScript check
 ```
 
-The composition id is **`AdVideo`**.
+Composition ids: **`AdVideo`** (vertical) and **`AdVideoWide`** (16:9).
 
 ---
 
@@ -34,121 +42,130 @@ The composition id is **`AdVideo`**.
 ```
 src/
   index.ts                 registerRoot entry
-  Root.tsx                 Composition registration + font preload
+  Root.tsx                 Registers the 9:16 + 16:9 compositions, preloads fonts
   Video.tsx                Master timeline — sequences all 7 scenes with cross-fades
-  theme.ts                 Design system: colors, gradients, easings, springs, scene map
+  theme.ts                 Design system: steel/cold/red tokens, gradients, springs, scene map
   animations.ts            Reusable motion helpers (fadeUp, fadeInOut, springScale, eased…)
   font.ts / fonts.ts       Self-hosted Inter (base64 woff2 → FontFace), no network needed
   components/
-    Background.tsx         Animated aurora gradient canvas (+ rgba helper)
+    Background.tsx         Industrial canvas: cold light pools + blueprint grid (+ rgba helper)
     Grain.tsx              Film grain + cinematic vignette
-    GlassCard.tsx          Frosted glassmorphism surface
-    BrowserFrame.tsx       Realistic macOS browser chrome
-    AnimatedText.tsx       Word-by-word Headline + Kicker
+    Stage.tsx              Adaptive 1080×1920 design canvas → drives both aspect ratios
+    SteelPanel.tsx         Brushed stainless-steel surface
+    DashboardFrame.tsx     Engineering-dashboard chrome (titled control surface)
+    Telemetry.tsx          Radial Gauge / Readout / Bar instrumentation
+    Equipment.tsx          12 stainless-steel equipment illustrations (pure SVG)
+    EuropeMap.tsx          France-hub → Europe logistics flow network
+    Wordmark.tsx           CASSELIN milled-steel lockup with red index mark
+    AnimatedText.tsx       Word-by-word Headline + Kicker (ink / steel / cold / accent tones)
   scenes/
-    Scene01Hook.tsx        … Scene07CTA.tsx
+    Scene01Impact.tsx … Scene07Brand.tsx
 public/fonts/              Vendored Inter woff2 weights (source for fonts.ts)
 scripts/generate-fonts.mjs Regenerates src/fonts.ts from the woff2 files
 ```
 
+### One design canvas, two deliverables
+Every scene composes against a fixed **1080×1920** space wrapped in `Stage`, which
+scales and centers that space to fit whatever composition runs it. The identical
+scene code therefore drives both the vertical and the 16:9 master; in 16:9 the
+industrial `Background` fills the surrounding frame as deliberate side framing.
+
 ### Why the design holds together
-Everything reads from `theme.ts` — no scene hardcodes a raw hex. The brand spectrum
-(indigo → violet → cyan, with pink/mint accents), the signature *easeOutExpo* settle
-curve, and three spring presets (`hero`, `panel`, `snappy`) are shared across all
-scenes, which is what gives the film one coherent, high-end voice.
+Everything reads from `theme.ts` — no scene hardcodes a raw hex. The brushed-steel
+ramp, the cold engineering light, the single Casselin red, the signature
+*easeOutExpo* settle curve and three spring presets (`hero`, `panel`, `snappy`) are
+shared across all scenes, which is what gives the film one coherent, leader-grade
+voice. The equipment is **pure vector** (no bitmaps), so it stays razor-sharp at any
+scale and renders identically on the farm.
 
 ---
 
 ## Scene breakdown — timings, visuals, animation, copy
 
 Timings are frames @ 30 fps (`SCENES` in `theme.ts`). Scenes overrun by 12 frames so
-they **cross-fade** through the shared dark canvas (see `Video.tsx`).
+they **cross-fade** through the shared industrial canvas (see `Video.tsx`).
 
 | # | Scene | Time | Frames |
 |---|-------|------|--------|
-| 1 | Hook | 0.0–2.0s | 0–60 |
-| 2 | Problem | 2.0–5.0s | 60–150 |
+| 1 | Impact | 0.0–2.0s | 0–60 |
+| 2 | Promise | 2.0–5.0s | 60–150 |
 | 3 | Solution | 5.0–10.0s | 150–300 |
-| 4 | Magic AI | 10.0–15.0s | 300–450 |
-| 5 | Result | 15.0–20.0s | 450–600 |
-| 6 | Emotion | 20.0–25.0s | 600–750 |
-| 7 | CTA | 25.0–30.0s | 750–900 |
+| 4 | Industrial Power | 10.0–15.0s | 300–450 |
+| 5 | Complete Ecosystem | 15.0–20.0s | 450–600 |
+| 6 | Logistics | 20.0–25.0s | 600–750 |
+| 7 | Brand Ending | 25.0–30.0s | 750–900 |
 
-### Scene 1 — Hook · `Build a premium website in seconds.`
-Black hold → a gradient **light beam** splits the frame → a futuristic glass UI
-**snaps in** with a brief chromatic-aberration *glitch* (RGB split via cyan/pink
-ghost layers) and "builds" its blocks in sequence. Headline assembles word-by-word
-in a brand gradient. Job: earn the next 28 seconds in under 3.
-*Motion:* beam `easeOutExpo` width sweep, `SPRING.panel` snap-in, staggered block reveal.
+### Scene 1 — Impact · `Casselin. Professional kitchen equipment.`
+Black hold → a cold specular highlight **sweeps across a brushed-inox slab** → the
+**CASSELIN** mark stamps in like a laser etch, a red index line draws beneath it and
+the positioning line resolves. Asserts "premium industrial leader" in under 2s.
+*Motion:* `easeOutExpo` specular sweep, `SPRING` stamp-in, eased line draw.
 
-### Scene 2 — Problem · `Designing websites is slow, expensive, complicated.`
-Controlled chaos: four tilted tool panels (`design.fig`, `index.tsx`, `builder.app`,
-`styles.css`) crowd in and gently wobble. Three friction words punch on hard cuts —
-**"Slow." → "Expensive." → "Complicated."** — each scaling down from 1.25 with a glow.
-Then everything **implodes** (scale-down + blur) to hand off to the solution.
-*Motion:* per-panel spring entrance, `floaty` wobble, quartic-ease word punches.
+### Scene 2 — Promise · `Speed. Reliability. Performance.`
+Three engineered guarantees punch in on weighted beats, each backed by a **live
+radial gauge climbing to full** (48H delivery · 99.9% uptime · MAX output). The
+implied contrast with a slow, chaotic kitchen is the relentless, instrumented
+confidence. *Motion:* `SPRING.hero` word punches, eased gauge fill, bottom progress ticks.
 
-### Scene 3 — Solution · `Just paste your idea or URL.`
-A single beautiful prompt field. The idea **types itself** in with a blinking caret
-(`A premium studio for handmade ceramics`), input/chip row (`URL · Idea · Brand`),
-then the **Generate** button **commits** with a light pulse and an expanding ring.
-*Motion:* typewriter interpolation, caret blink, `easeOutExpo` press, radial pulse.
+### Scene 3 — Solution · `Everything your kitchen needs.`
+A Casselin **catalogue console** (`DashboardFrame`): the core units snap into a
+steel grid in rapid sequence — fryer, grill, oven, toaster, bain-marie, griddle —
+each on its own milled tile with a part label. *Motion:* staggered `SPRING.snappy`
+tile reveals, eased frame entrance.
 
-### Scene 4 — Magic AI · `Our AI builds everything for you.`
-The value reveal. Inside a real **browser frame** the site assembles live —
-hero image → headline → copy → feature cards → **brand palette** — block by block,
-with a **shimmer sweep** that tracks progress. A floating glass status chip narrates
-`Layout → Imagery → Copywriting → Branding` with a live `%` and spinner.
-*Motion:* progress-driven staged reveals, screen-blend shimmer, rotating spinner.
+### Scene 4 — Industrial Power · `Designed for professionals.`
+A single unit close-up **runs under load** on a steel panel: core temperature
+climbs to 320 °C, power holds at 9.0 kW, the duty-cycle bar pulses **HEAVY** — the
+instrumented proof of intensive, all-service performance, under a slow cinematic
+push-in. *Motion:* eased telemetry ramps, sinusoidal heat bloom, scene-wide zoom.
 
-### Scene 5 — Result · `Ready-to-sell website. Instantly.`
-The payoff. A finished, genuinely premium landing page (`Atelier Noir` ceramics shop:
-nav, gradient hero, product grid, shipping banner) **auto-scrolls** smoothly inside the
-browser frame, proving the output is real. A **"Published"** toast lands at the end.
-*Motion:* `easeInOut` scroll, top/bottom depth fades, spring toast.
+### Scene 5 — Complete Ecosystem · `Cooking. Preparation. Cold. Hygiene.`
+The full range, **segmented like a digital catalogue**: four ranges reveal in
+sequence, each a steel row of its core units with a colour-coded edge, the matching
+word igniting as its row lands. *Motion:* per-row slide-in, staggered `SPRING` icon pops.
 
-### Scene 6 — Emotion / Impact · `Launch like a billion-dollar startup.`
-Aspirational beat. The site lives across **phone, laptop and tablet**, floating in a
-violet **light bloom**, under a slow **cinematic push-in** (1.12 → 1.0 over the scene).
-*Motion:* per-device spring entrance, continuous `floaty` drift, full-scene zoom.
+### Scene 6 — Logistics · `Stock. Fast delivery. Europe-wide service.`
+A **France hub dispatches cold-light flows across Europe** (`EuropeMap`) while live
+operational readouts build: 12,000+ units in stock, 24–48H France, EU-wide coverage.
+The scale-and-reach proof beat. *Motion:* progress-driven arc draw + node ignition,
+counting readouts.
 
-### Scene 7 — CTA · `Create your website in seconds.` / `Start now — no code, no agency, no limits.`
-The close. Brand lockup (**Casselin** + spark mark), gradient headline, one luminous
-**CTA button** with a breathing glow on a living gradient. A **cursor glides in and
-clicks** — a ripple radiates — the final micro-interaction inviting the viewer to do
-the same. Trust row: `★★★★★ 12,000+ sites launched`.
-*Motion:* spring lockup/button, `easeOutExpo` cursor travel, click ripple, breathe glow.
+### Scene 7 — Brand Ending · `Casselin. Built for performance.` / `Professional kitchen equipment.`
+The mark settles on a luminous industrial field under a slow push-in, the red index
+line draws, the positioning line resolves and the frame **fades clean**. The
+signature of a leader. *Motion:* `SPRING` lockup, breathing cold bloom, eased fade-out.
 
 ---
 
 ## All on-screen copy (in order)
 
-1. **Build a premium website in seconds.**
-2. **Slow. · Expensive. · Complicated.** — *Designing websites is slow, expensive, complicated.*
-3. **Just paste your idea or URL.** — `A premium studio for handmade ceramics` · Generate
-4. **Our AI builds everything for you.** — Layout / Imagery / Copywriting / Branding
-5. **Ready-to-sell website. Instantly.** — Published
-6. **Launch like a billion-dollar startup.**
-7. **Create your website in seconds.** — *Start now — no code, no agency, no limits.* — **Build my website**
+1. **Casselin.** — *Professional kitchen equipment.*
+2. **Speed. · Reliability. · Performance.**
+3. **Everything your kitchen needs.**
+4. **Designed for professionals.** — *Built to run all service.*
+5. **One complete ecosystem.** — *Cooking. Preparation. Cold. Hygiene.*
+6. **Shipped across Europe.** — *Stock · Delivery · Service · 24–48H France*
+7. **Built for performance.** — *Professional kitchen equipment.*
 
 ---
 
-## Customizing for your brand
+## Customizing
 
-- **Copy & timings** — every headline and the `SCENES` frame map live in
-  `theme.ts` / each scene file; change text in one place.
-- **Colors & gradients** — edit the `COLORS` / `GRADIENTS` tokens in `theme.ts`;
-  the whole film re-skins instantly.
-- **Brand name / logo** — `Scene07CTA.tsx` (`Casselin` lockup) and `BrowserFrame` URLs.
-- **Demo site** — `Scene05Result.tsx`'s `FinishedSite` is plain JSX; swap in your niche.
+- **Copy & timings** — every headline and the `SCENES` frame map live in `theme.ts`
+  / each scene file; change text in one place.
+- **Colours & finish** — edit the `COLORS` / `GRADIENTS` tokens in `theme.ts`
+  (steel ramp, cold light, Casselin red); the whole film re-skins instantly.
+- **Equipment** — add or swap units in `components/Equipment.tsx` (pure SVG paths on
+  a shared 120×120 grid) and reference them in the Solution / Ecosystem scenes.
+- **Logistics reach** — edit the `NODES` in `components/EuropeMap.tsx`.
 - **Fonts** — drop new woff2 weights in `public/fonts/`, run
   `node scripts/generate-fonts.mjs`, and adjust `FONT.family` in `theme.ts`.
 
 ## Technical notes
 
-- **No linear motion.** All movement uses spring physics or bezier easings defined in
-  `theme.ts` (`EASE.expo`, `EASE.soft`, `EASE.inOut`).
+- **No linear motion.** All movement uses spring physics or the bezier easings
+  defined in `theme.ts` (`EASE.expo`, `EASE.soft`, `EASE.inOut`).
 - **Self-contained fonts.** Inter is embedded as base64 woff2 and registered via the
   FontFace API, so renders never depend on a font CDN.
-- **Deterministic.** Grain uses a seeded noise field; output is identical across runs
-  and render nodes.
+- **Deterministic.** Grain uses a seeded noise field and all equipment is vector;
+  output is identical across runs and render nodes.

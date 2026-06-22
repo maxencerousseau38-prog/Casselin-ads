@@ -67,7 +67,7 @@ export const springScale = (
     delay?: number;
     from?: number;
     to?: number;
-    preset?: typeof SPRING.panel;
+    preset?: { damping: number; mass: number; stiffness: number };
   } = {},
 ) => {
   const s = spring({

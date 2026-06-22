@@ -4,56 +4,74 @@ import { COLORS } from "../theme";
 import { floaty } from "../animations";
 
 /**
- * Ambient aurora background.
+ * Industrial premium background.
  *
- * Two slow-drifting radial "light blobs" over a deep base, plus a soft top
- * vignette. This is what gives every frame depth and the high-end gradient
- * feel without ever looking like a flat template.
+ * A cold graphite canvas with a faint engineering blueprint grid, two slow
+ * drifting cold-light pools and an anchoring top/bottom shade. This is what
+ * gives every frame the controlled-lab depth of a Bosch / Siemens spot without
+ * ever looking like a flat template. Fills the real frame, so it doubles as the
+ * deliberate side framing in the 16:9 master.
  */
 export const Background: React.FC<{
-  tint?: "brand" | "warm" | "cool";
+  tint?: "cold" | "steel" | "warm";
   intensity?: number;
-}> = ({ tint = "brand", intensity = 1 }) => {
+  grid?: boolean;
+}> = ({ tint = "cold", intensity = 1, grid = true }) => {
   const frame = useCurrentFrame();
 
   const palettes = {
-    brand: [COLORS.indigo, COLORS.violet, COLORS.cyan],
-    warm: [COLORS.pink, COLORS.violet, COLORS.indigo],
-    cool: [COLORS.cyan, COLORS.mint, COLORS.indigo],
+    cold: [COLORS.cold, COLORS.coldBright],
+    steel: [COLORS.steelMid, COLORS.cold],
+    warm: [COLORS.red, COLORS.cold],
   } as const;
-  const [a, b, c] = palettes[tint];
+  const [a, b] = palettes[tint];
 
-  const blobA = {
-    x: 30 + floaty(frame, 6, 0.012, 0),
-    y: 26 + floaty(frame, 5, 0.01, 1.2),
+  const poolA = {
+    x: 28 + floaty(frame, 4, 0.011, 0),
+    y: 22 + floaty(frame, 4, 0.009, 1.2),
   };
-  const blobB = {
-    x: 74 + floaty(frame, 7, 0.009, 2.4),
-    y: 70 + floaty(frame, 6, 0.011, 0.6),
-  };
-  const blobC = {
-    x: 50 + floaty(frame, 9, 0.007, 3.1),
-    y: 96 + floaty(frame, 4, 0.013, 1.9),
+  const poolB = {
+    x: 76 + floaty(frame, 5, 0.008, 2.4),
+    y: 78 + floaty(frame, 5, 0.01, 0.6),
   };
 
-  const alpha = (v: number) => Math.min(1, v * intensity);
+  const al = (v: number) => Math.min(1, v * intensity);
 
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.base }}>
+      {/* Cold light pools */}
       <AbsoluteFill
         style={{
           background: `
-            radial-gradient(46% 38% at ${blobA.x}% ${blobA.y}%, ${rgba(a, alpha(0.55))} 0%, transparent 60%),
-            radial-gradient(50% 42% at ${blobB.x}% ${blobB.y}%, ${rgba(b, alpha(0.45))} 0%, transparent 62%),
-            radial-gradient(60% 50% at ${blobC.x}% ${blobC.y}%, ${rgba(c, alpha(0.4))} 0%, transparent 65%)
+            radial-gradient(44% 36% at ${poolA.x}% ${poolA.y}%, ${rgba(a, al(0.30))} 0%, transparent 60%),
+            radial-gradient(52% 44% at ${poolB.x}% ${poolB.y}%, ${rgba(b, al(0.22))} 0%, transparent 64%)
           `,
-          filter: "blur(8px)",
+          filter: "blur(6px)",
         }}
       />
-      {/* Subtle dark gradient to anchor text contrast top & bottom */}
+
+      {/* Engineering blueprint grid */}
+      {grid && (
+        <AbsoluteFill
+          style={{
+            backgroundImage: `
+              linear-gradient(${COLORS.steelLine} 1px, transparent 1px),
+              linear-gradient(90deg, ${COLORS.steelLine} 1px, transparent 1px)
+            `,
+            backgroundSize: "96px 96px",
+            maskImage:
+              "radial-gradient(80% 70% at 50% 42%, #000 30%, transparent 90%)",
+            WebkitMaskImage:
+              "radial-gradient(80% 70% at 50% 42%, #000 30%, transparent 90%)",
+            opacity: 0.5,
+          }}
+        />
+      )}
+
+      {/* Top/bottom shade to anchor text contrast */}
       <AbsoluteFill
         style={{
-          background: `linear-gradient(180deg, ${rgba(COLORS.base, 0.55)} 0%, transparent 22%, transparent 72%, ${rgba(COLORS.base, 0.75)} 100%)`,
+          background: `linear-gradient(180deg, ${rgba(COLORS.base, 0.7)} 0%, transparent 20%, transparent 70%, ${rgba(COLORS.base, 0.88)} 100%)`,
         }}
       />
     </AbsoluteFill>

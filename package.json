@@ -1,15 +1,17 @@
 {
   "name": "casselin-ads",
   "version": "1.0.0",
-  "description": "Premium SaaS video ad (AI website builder) built with Remotion — vertical 9:16 for TikTok, Instagram Reels and YouTube Shorts.",
+  "description": "Casselin industrial-premium video ad (professional kitchen equipment) built with Remotion — 9:16 and 16:9 masters from one timeline.",
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
     "dev": "remotion studio",
     "studio": "remotion studio",
-    "render": "remotion render AdVideo out/casselin-ad.mp4",
-    "render:hd": "remotion render AdVideo out/casselin-ad.mp4 --crf=16 --image-format=png",
-    "still": "remotion still AdVideo out/poster.png --frame=470",
+    "render": "remotion render AdVideo out/casselin-ad-9x16.mp4",
+    "render:wide": "remotion render AdVideoWide out/casselin-ad-16x9.mp4",
+    "render:hd": "remotion render AdVideo out/casselin-ad-9x16.mp4 --crf=16 --image-format=png",
+    "render:all": "npm run render && npm run render:wide",
+    "still": "remotion still AdVideo out/poster.png --frame=40",
     "upgrade": "remotion upgrade",
     "typecheck": "tsc --noEmit"
   },

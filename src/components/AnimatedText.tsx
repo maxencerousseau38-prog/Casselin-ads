@@ -3,31 +3,42 @@ import { useCurrentFrame } from "remotion";
 import { COLORS, EASE, FONT, GRADIENTS } from "../theme";
 import { fadeUp } from "../animations";
 
+type Tone = "ink" | "steel" | "cold" | "accent";
+
+const toneFill: Record<Exclude<Tone, "ink">, string> = {
+  steel: GRADIENTS.textSteel,
+  cold: GRADIENTS.cold,
+  accent: GRADIENTS.accent,
+};
+
 /**
- * Word-by-word headline reveal with a premium settle.
- * Each word fades up on a small stagger so the line "assembles" itself.
+ * Word-by-word headline reveal with a precise settle.
+ * Each word fades up on a small stagger so the line "assembles" itself —
+ * controlled and engineered, never bouncy.
  */
 export const Headline: React.FC<{
   text: string;
   delay?: number;
   size?: number;
   weight?: number;
-  gradient?: boolean;
+  tone?: Tone;
   stagger?: number;
   lineHeight?: number;
   maxWidth?: number;
   align?: "center" | "left";
+  letterSpacing?: number;
   style?: React.CSSProperties;
 }> = ({
   text,
   delay = 0,
   size = 88,
   weight = 700,
-  gradient = false,
+  tone = "ink",
   stagger = 4,
-  lineHeight = 1.04,
+  lineHeight = 1.05,
   maxWidth = 900,
   align = "center",
+  letterSpacing = -1.5,
   style,
 }) => {
   const frame = useCurrentFrame();
@@ -46,7 +57,7 @@ export const Headline: React.FC<{
         fontWeight: weight,
         fontSize: size,
         lineHeight,
-        letterSpacing: -1.5,
+        letterSpacing,
         textAlign: align,
         ...style,
       }}
@@ -59,17 +70,17 @@ export const Headline: React.FC<{
             ...fadeUp(frame, {
               delay: delay + i * stagger,
               duration: 26,
-              distance: 36,
+              distance: 34,
               ease: EASE.expo,
             }),
-            ...(gradient
-              ? {
-                  backgroundImage: GRADIENTS.brand,
+            ...(tone === "ink"
+              ? { color: COLORS.ink }
+              : {
+                  backgroundImage: toneFill[tone],
                   WebkitBackgroundClip: "text",
                   backgroundClip: "text",
                   color: "transparent",
-                }
-              : { color: COLORS.ink }),
+                }),
           }}
         >
           {w}
@@ -79,12 +90,13 @@ export const Headline: React.FC<{
   );
 };
 
-/** Small uppercase eyebrow / kicker label. */
+/** Small uppercase eyebrow / system kicker label. */
 export const Kicker: React.FC<{
   text: string;
   delay?: number;
   color?: string;
-}> = ({ text, delay = 0, color = COLORS.cyan }) => {
+  letterSpacing?: number;
+}> = ({ text, delay = 0, color = COLORS.cold, letterSpacing = 6 }) => {
   const frame = useCurrentFrame();
   return (
     <div
@@ -93,7 +105,7 @@ export const Kicker: React.FC<{
         fontFamily: FONT.family,
         fontSize: 24,
         fontWeight: 600,
-        letterSpacing: 6,
+        letterSpacing,
         textTransform: "uppercase",
         color,
       }}

@@ -1,8 +1,11 @@
 /**
- * Central design system for the ad.
+ * Central design system for the Casselin ad.
  *
- * Everything visual references these tokens so the whole film keeps a single,
- * cohesive, Apple-keynote-grade look. No scene hardcodes a raw hex value.
+ * Direction: industrial premium — brushed stainless steel, cold controlled
+ * light, engineering-dashboard UI and a single precise Casselin red accent.
+ * The reference register is Bosch Professional / Siemens industrial / premium
+ * equipment campaigns. Every visual reads from these tokens so the whole film
+ * keeps one coherent, leader-grade voice. No scene hardcodes a raw hex value.
  */
 
 export const VIDEO = {
@@ -12,45 +15,70 @@ export const VIDEO = {
   durationInFrames: 900, // 30s
 } as const;
 
+/** 16:9 master — same timeline, adapted via the scaled Stage. */
+export const VIDEO_WIDE = {
+  width: 1920,
+  height: 1080,
+  fps: 30,
+  durationInFrames: 900,
+} as const;
+
+/** The fixed design canvas all scenes are composed on (9:16). */
+export const STAGE = { width: 1080, height: 1920 } as const;
+
 /**
  * Scene map — single source of truth for timings (in frames @30fps).
  * Each scene cross-fades into the next via a short overlap handled in Video.tsx.
  */
 export const SCENES = {
-  hook: { from: 0, duration: 60 }, //        0.0s –  2.0s
-  problem: { from: 60, duration: 90 }, //     2.0s –  5.0s
-  solution: { from: 150, duration: 150 }, //  5.0s – 10.0s
-  magic: { from: 300, duration: 150 }, //    10.0s – 15.0s
-  result: { from: 450, duration: 150 }, //   15.0s – 20.0s
-  emotion: { from: 600, duration: 150 }, //  20.0s – 25.0s
-  cta: { from: 750, duration: 150 }, //      25.0s – 30.0s
+  impact: { from: 0, duration: 60 }, //        0.0s –  2.0s — brand impact
+  promise: { from: 60, duration: 90 }, //      2.0s –  5.0s — speed/reliability/performance
+  solution: { from: 150, duration: 150 }, //   5.0s – 10.0s — everything your kitchen needs
+  power: { from: 300, duration: 150 }, //     10.0s – 15.0s — designed for professionals
+  ecosystem: { from: 450, duration: 150 }, // 15.0s – 20.0s — full range
+  logistics: { from: 600, duration: 150 }, // 20.0s – 25.0s — stock / delivery / Europe
+  brand: { from: 750, duration: 150 }, //     25.0s – 30.0s — brand ending
 } as const;
 
 export const COLORS = {
-  // Deep, slightly blue-black canvas — never pure #000 (feels cheap on OLED).
-  base: "#05060B",
-  baseSoft: "#0A0C17",
-  ink: "#F6F8FF",
-  inkSoft: "rgba(246, 248, 255, 0.62)",
-  inkFaint: "rgba(246, 248, 255, 0.30)",
+  // Deep cold graphite canvas — never pure #000 (reads cheap, kills the steel).
+  base: "#070A0E",
+  baseSoft: "#0E141C",
+  panel: "#121A23",
+  panelSoft: "#0C1119",
 
-  // Premium brand spectrum: indigo → violet → cyan with a warm pink accent.
-  indigo: "#6366F1",
-  violet: "#8B5CF6",
-  cyan: "#22D3EE",
-  pink: "#F472B6",
-  mint: "#34E5C0",
+  ink: "#F2F6FC",
+  inkSoft: "rgba(242, 246, 252, 0.66)",
+  inkFaint: "rgba(242, 246, 252, 0.34)",
 
-  glassFill: "rgba(255, 255, 255, 0.045)",
-  glassStroke: "rgba(255, 255, 255, 0.12)",
-  glassStrokeBright: "rgba(255, 255, 255, 0.28)",
+  // Brushed stainless steel ramp.
+  steelHi: "#EEF2F7",
+  steel: "#AEB9C7",
+  steelMid: "#76828F",
+  steelDark: "#39424E",
+  steelLine: "rgba(174, 185, 199, 0.16)",
+
+  // Cold controlled light (the "engineering" glow).
+  cold: "#5AA9FF",
+  coldBright: "#86C8FF",
+
+  // Casselin signature red — used sparingly, with intent.
+  red: "#E12A1E",
+  redBright: "#FF4334",
+
+  glassFill: "rgba(255, 255, 255, 0.04)",
+  glassStroke: "rgba(255, 255, 255, 0.10)",
+  glassStrokeBright: "rgba(255, 255, 255, 0.24)",
 } as const;
 
 export const GRADIENTS = {
-  brand: `linear-gradient(120deg, ${COLORS.indigo} 0%, ${COLORS.violet} 45%, ${COLORS.cyan} 100%)`,
-  brandSoft: `linear-gradient(120deg, ${COLORS.violet} 0%, ${COLORS.cyan} 100%)`,
-  warm: `linear-gradient(120deg, ${COLORS.pink} 0%, ${COLORS.violet} 60%, ${COLORS.indigo} 100%)`,
-  text: `linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.72) 100%)`,
+  // Vertical brushed-metal sweep used for steel surfaces and text.
+  steel: `linear-gradient(180deg, ${COLORS.steelHi} 0%, ${COLORS.steel} 38%, ${COLORS.steelMid} 62%, ${COLORS.steelHi} 100%)`,
+  steelEdge: `linear-gradient(120deg, ${COLORS.steelHi} 0%, ${COLORS.steelMid} 30%, ${COLORS.steelDark} 55%, ${COLORS.steel} 78%, ${COLORS.steelHi} 100%)`,
+  cold: `linear-gradient(120deg, ${COLORS.coldBright} 0%, ${COLORS.cold} 100%)`,
+  accent: `linear-gradient(120deg, ${COLORS.redBright} 0%, ${COLORS.red} 100%)`,
+  text: `linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.74) 100%)`,
+  textSteel: `linear-gradient(180deg, ${COLORS.steelHi} 0%, ${COLORS.steel} 55%, ${COLORS.steelMid} 100%)`,
 } as const;
 
 export const FONT = {
@@ -60,20 +88,20 @@ export const FONT = {
 
 /**
  * Easing curves. We deliberately never use linear motion.
- * `expo` is the signature "settle" curve used across hero transitions.
+ * `expo` is the signature precise "settle" curve used across hero transitions.
  */
 export const EASE = {
-  expo: [0.16, 1, 0.3, 1] as const, // easeOutExpo — smooth, premium settle
+  expo: [0.16, 1, 0.3, 1] as const, // easeOutExpo — precise, premium settle
   soft: [0.22, 1, 0.36, 1] as const, // gentle deceleration
   inOut: [0.65, 0, 0.35, 1] as const, // balanced cut transitions
 } as const;
 
-/** Spring presets reused across scenes for consistent physicality. */
+/** Spring presets reused across scenes for consistent, engineered physicality. */
 export const SPRING = {
   /** Confident hero entrance — minimal overshoot, fast settle. */
   hero: { damping: 18, mass: 0.9, stiffness: 120 },
-  /** Soft, weighty reveal for cards and panels. */
-  panel: { damping: 22, mass: 1.1, stiffness: 90 },
-  /** Snappy micro-interaction (buttons, chips, cursor). */
-  snappy: { damping: 14, mass: 0.6, stiffness: 200 },
+  /** Weighty reveal for panels and machinery — feels like real mass. */
+  panel: { damping: 24, mass: 1.2, stiffness: 88 },
+  /** Snappy micro-interaction (chips, indicators, cursor). */
+  snappy: { damping: 15, mass: 0.6, stiffness: 210 },
 } as const;
