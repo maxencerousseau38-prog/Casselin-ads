@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Armoire négative 200 L Blanche — Casselin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Design tokens ─────────────────────────────────────────────── */
+    :root {
+      --white:        #FFFFFF;
+      --bg-light:     #FAFAFA;
+      --blue:         #0053A6;
+      --blue-deep:    #0B3B91;
+      --blue-subtle:  #EBF2FC;
+      --text:         #0D0D0D;
+      --text-muted:   #6B7280;
+      --border:       #E5E7EB;
+      --border-hover: #CBD5E1;
+      --font:         'Inter', system-ui, -apple-system, sans-serif;
+      --radius:       6px;
+      --radius-md:    10px;
+      --shadow-card:  0 1px 4px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.06);
+      --transition:   .18s ease;
+    }
+
+    /* ─── Reset minimal ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ─── Layout helpers ────────────────────────────────────────────── */
+    .container {
+      max-width: 1160px;
+      margin-inline: auto;
+      padding-inline: 24px;
+    }
+    .section { padding-block: 56px; }
+    .section + .section { border-top: 1px solid var(--border); }
+
+    /* ─── Header ────────────────────────────────────────────────────── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      height: 64px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -.5px;
+      color: var(--blue-deep);
+    }
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--blue);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-mark svg { width: 18px; height: 18px; fill: #fff; }
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    .header-nav a {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: .01em;
+      transition: color var(--transition);
+    }
+    .header-nav a:hover { color: var(--blue); }
+    .header-cta {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+      border: 1.5px solid var(--blue);
+      border-radius: var(--radius);
+      padding: 7px 18px;
+      transition: background var(--transition), color var(--transition);
+      white-space: nowrap;
+    }
+    .header-cta:hover { background: var(--blue); color: #fff; }
+
+    /* ─── Breadcrumb ─────────────────────────────────────────────────── */
+    .breadcrumb {
+      padding-block: 16px;
+      background: var(--white);
+    }
+    .breadcrumb-list {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+    .breadcrumb-list li { display: flex; align-items: center; gap: 6px; }
+    .breadcrumb-list li:not(:last-child)::after {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      border-right: 1.5px solid var(--border-hover);
+      border-top: 1.5px solid var(--border-hover);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+    .breadcrumb-list a { color: var(--text-muted); transition: color var(--transition); }
+    .breadcrumb-list a:hover { color: var(--blue); }
+    .breadcrumb-list li:last-child span { color: var(--text); font-weight: 500; }
+
+    /* ─── Hero ───────────────────────────────────────────────────────── */
+    .hero { padding-block: 40px 56px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* Image */
+    .hero-image-wrap {
+      position: sticky;
+      top: 88px;
+    }
+    .hero-image-frame {
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 32px;
+      transition: transform .3s ease;
+    }
+    .hero-image-frame:hover img { transform: scale(1.03); }
+    .image-note {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Info column */
+    .hero-info { padding-top: 4px; }
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 40px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      background: var(--white);
+    }
+    .badge--blue {
+      color: var(--blue);
+      border-color: #BFD4EF;
+      background: var(--blue-subtle);
+    }
+    .product-title {
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 700;
+      letter-spacing: -.4px;
+      line-height: 1.25;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .product-ref {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-bottom: 28px;
+      letter-spacing: .02em;
+    }
+    .product-ref strong {
+      color: var(--text);
+      font-weight: 600;
+      font-family: monospace;
+      font-size: 13px;
+    }
+    .price-block {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .price-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .price-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -.5px;
+    }
+    .price-ht-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      align-self: flex-end;
+      padding-bottom: 3px;
+    }
+    .cta-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: .01em;
+      border: none;
+      border-radius: var(--radius);
+      padding: 14px 28px;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      text-align: center;
+    }
+    .btn-primary:hover { background: var(--blue-deep); transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--text);
+      font-size: 13.5px;
+      font-weight: 500;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 28px;
+      cursor: pointer;
+      transition: border-color var(--transition), color var(--transition);
+      text-align: center;
+    }
+    .btn-secondary:hover { border-color: var(--blue); color: var(--blue); }
+    .trust-strip {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .trust-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--blue);
+    }
+
+    /* ─── Documents ──────────────────────────────────────────────────── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -.3px;
+      color: var(--text);
+      margin-bottom: 32px;
+    }
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .doc-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+      cursor: pointer;
+    }
+    .doc-card:hover {
+      border-color: var(--blue);
+      box-shadow: 0 4px 16px rgba(0, 83, 166, .1);
+      transform: translateY(-2px);
+    }
+    .doc-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .doc-icon--pdf { background: #FEF2F2; color: #DC2626; }
+    .doc-icon--zip { background: #FFF7ED; color: #EA580C; }
+    .doc-icon svg { width: 20px; height: 20px; }
+    .doc-info { min-width: 0; }
+    .doc-label {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .doc-type {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .doc-arrow {
+      margin-left: auto;
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      color: var(--border-hover);
+      transition: color var(--transition);
+    }
+    .doc-card:hover .doc-arrow { color: var(--blue); }
+
+    /* ─── Specs placeholder ──────────────────────────────────────────── */
+    .specs-placeholder {
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .specs-placeholder-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--blue-subtle);
+      border-radius: 10px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue);
+    }
+    .specs-placeholder-icon svg { width: 22px; height: 22px; }
+    .specs-placeholder-text h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .specs-placeholder-text p {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 520px;
+    }
+    .specs-placeholder-text a {
+      color: var(--blue);
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ─── CHR section ────────────────────────────────────────────────── */
+    .chr-section { background: var(--bg-light); }
+    .chr-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .chr-text .section-title { margin-bottom: 16px; }
+    .chr-text p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+    .chr-features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .chr-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .chr-feature-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--blue-subtle);
+      border-radius: 8px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue);
+      margin-top: 2px;
+    }
+    .chr-feature-icon svg { width: 18px; height: 18px; }
+    .chr-feature-body h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    .chr-feature-body p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+    .chr-visual {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chr-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 40px;
+    }
+
+    /* ─── Related products ───────────────────────────────────────────── */
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .related-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--white);
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+    .related-card:hover {
+      border-color: var(--blue);
+      box-shadow: var(--shadow-card);
+      transform: translateY(-3px);
+    }
+    .related-card-body {
+      padding: 16px 18px 18px;
+    }
+    .related-card-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .related-card-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.35;
+      margin-bottom: 14px;
+    }
+    .related-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--blue);
+      transition: gap var(--transition);
+    }
+    .related-card-link svg { width: 14px; height: 14px; }
+    .related-card:hover .related-card-link { gap: 10px; }
+
+    /* ─── Footer ─────────────────────────────────────────────────────── */
+    .site-footer {
+      background: var(--text);
+      color: rgba(255,255,255,.55);
+      padding-block: 40px;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-logo {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -.3px;
+    }
+    .footer-copy { font-size: 12.5px; }
+
+    /* ─── Responsive ─────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+      .hero-image-wrap { position: static; }
+      .chr-inner { grid-template-columns: 1fr; gap: 36px; }
+      .chr-visual { display: none; }
+      .header-nav { display: none; }
+    }
+    @media (max-width: 600px) {
+      .section { padding-block: 36px; }
+      .docs-grid { grid-template-columns: 1fr; }
+      .related-grid { grid-template-columns: 1fr 1fr; }
+      .price-value { font-size: 24px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 380px) {
+      .related-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ HEADER ══════════════════════════════════════════════════════ -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="https://www.casselin.com/fr/" class="logo">
+          <div class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="6" height="6" rx="1"/>
+              <rect x="10" y="2" width="6" height="6" rx="1"/>
+              <rect x="2" y="10" width="6" height="6" rx="1"/>
+              <rect x="10" y="10" width="6" height="6" rx="1"/>
+            </svg>
+          </div>
+          Casselin
+        </a>
+        <nav aria-label="Navigation principale">
+          <ul class="header-nav">
+            <li><a href="https://www.casselin.com/fr/10001-nos-produits">Nos produits</a></li>
+            <li><a href="https://www.casselin.com/fr/content/4-entreprise">L'entreprise</a></li>
+            <li><a href="https://catalogue.casselin.com/catalogue/FR/">Catalogue</a></li>
+            <li><a href="https://www.casselin.com/fr/content/35-nous-contacter">Contact</a></li>
+          </ul>
+        </nav>
+        <a href="https://www.casselin.com/fr/content/35-nous-contacter" class="header-cta">Contactez-nous</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ BREADCRUMB ══════════════════════════════════════════════════ -->
+  <div class="breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb-list" aria-label="Fil d'Ariane">
+        <li><a href="https://www.casselin.com/fr/">Accueil</a></li>
+        <li><a href="https://www.casselin.com/fr/10001-nos-produits">Nos produits</a></li>
+        <li><a href="https://www.casselin.com/fr/12565-froid">Froid</a></li>
+        <li><a href="https://www.casselin.com/fr/13042-armoire-negative">Armoire négative</a></li>
+        <li><span>Armoire négative 200 L Blanche</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══ HERO ════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+
+        <!-- Image -->
+        <div class="hero-image-wrap">
+          <div class="hero-image-frame">
+            <img
+              src="https://www.casselin.com/13946-large_default/armoire-negative-200-l-blanche.jpg"
+              alt="Armoire négative 200 L Blanche — Casselin"
+              loading="eager"
+            />
+          </div>
+          <p class="image-note">1 visuel disponible pour ce produit</p>
+        </div>
+
+        <!-- Info -->
+        <div class="hero-info">
+          <div class="badges">
+            <span class="badge badge--blue">Matériel professionnel</span>
+            <span class="badge">Usage CHR</span>
+            <span class="badge">Documentation disponible</span>
+          </div>
+
+          <h1 class="product-title">Armoire négative 200&nbsp;L Blanche</h1>
+
+          <p class="product-ref">
+            Référence&nbsp;: <strong>CAN200LB</strong>
+          </p>
+
+          <div class="price-block">
+            <span class="price-label">Prix</span>
+            <span class="price-value">1&nbsp;029,00&nbsp;€</span>
+            <span class="price-ht-note">HT</span>
+          </div>
+
+          <div class="cta-group">
+            <a href="https://www.casselin.com/fr/content/35-nous-contacter" class="btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              Demander un devis
+            </a>
+            <a href="https://www.casselin.com/fr/content/36-devenir-revendeur" class="btn-secondary">
+              Trouver un revendeur
+            </a>
+          </div>
+
+          <div class="trust-strip">
+            <div class="trust-item">
+              <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+              </svg>
+              Fiche technique &amp; notice disponibles en téléchargement
+            </div>
+            <div class="trust-item">
+              <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+              Fichier STEP disponible pour intégration technique
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ DOCUMENTS ════════════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container">
+      <p class="section-label">Ressources</p>
+      <h2 class="section-title">Documentation technique</h2>
+
+      <div class="docs-grid">
+
+        <!-- Fiche technique (PDF) -->
+        <a href="https://www.casselin.com/fiche/fr/CAN200LB.pdf" target="_blank" rel="noopener" class="doc-card">
+          <div class="doc-icon doc-icon--pdf">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+              <line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/>
+            </svg>
+          </div>
+          <div class="doc-info">
+            <div class="doc-label">Fiche technique</div>
+            <div class="doc-type">PDF · CAN200LB</div>
+          </div>
+          <svg class="doc-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+
+        <!-- Notice (PDF) -->
+        <a href="https://www.casselin.com/notice/CAN200LB-notice.pdf" target="_blank" rel="noopener" class="doc-card">
+          <div class="doc-icon doc-icon--pdf">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+              <line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/>
+            </svg>
+          </div>
+          <div class="doc-info">
+            <div class="doc-label">Notice d'utilisation</div>
+            <div class="doc-type">PDF · CAN200LB</div>
+          </div>
+          <svg class="doc-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+
+        <!-- STEP (ZIP) -->
+        <a href="https://www.casselin.com/step/CAN200LB-step.zip" target="_blank" rel="noopener" class="doc-card">
+          <div class="doc-icon doc-icon--zip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/>
+              <line x1="10" y1="12" x2="14" y2="12"/>
+            </svg>
+          </div>
+          <div class="doc-info">
+            <div class="doc-label">Fichier STEP (CAO)</div>
+            <div class="doc-type">ZIP · CAN200LB</div>
+          </div>
+          <svg class="doc-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CARACTÉRISTIQUES ─────────────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <p class="section-label">Spécifications</p>
+      <h2 class="section-title">Caractéristiques techniques</h2>
+      <div class="specs-placeholder">
+        <div class="specs-placeholder-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <div class="specs-placeholder-text">
+          <h3>Documentation technique disponible en PDF</h3>
+          <p>
+            Les caractéristiques complètes de ce produit sont consultables dans la
+            <a href="https://www.casselin.com/fiche/fr/CAN200LB.pdf" target="_blank" rel="noopener">fiche technique PDF</a>
+            disponible ci-dessus. Dimensions, puissance, alimentation et toutes les données techniques
+            s'y trouvent au format officiel Casselin.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PENSÉ POUR LES PROFESSIONNELS ───────────────────────────── -->
+  <section class="section chr-section">
+    <div class="container">
+      <div class="chr-inner">
+        <div class="chr-text">
+          <p class="section-label">Professionnels CHR</p>
+          <h2 class="section-title">Pensé pour les professionnels</h2>
+          <p>
+            La gamme Casselin est conçue pour répondre aux exigences des environnements
+            de restauration, hôtellerie et commerce alimentaire. Chaque fiche produit
+            est structurée pour faciliter la lecture des informations essentielles :
+            référence, documentation technique et ressources CAO disponibles directement.
+          </p>
+          <div class="chr-features">
+            <div class="chr-feature">
+              <div class="chr-feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                </svg>
+              </div>
+              <div class="chr-feature-body">
+                <h4>Documentation officielle incluse</h4>
+                <p>Fiche technique, notice et fichier STEP disponibles pour chaque référence.</p>
+              </div>
+            </div>
+            <div class="chr-feature">
+              <div class="chr-feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+                </svg>
+              </div>
+              <div class="chr-feature-body">
+                <h4>Intégration CAO facilitée</h4>
+                <p>Fichier STEP fourni pour une intégration directe dans vos logiciels de conception.</p>
+              </div>
+            </div>
+            <div class="chr-feature">
+              <div class="chr-feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <div class="chr-feature-body">
+                <h4>Réseau de revendeurs partenaires</h4>
+                <p>Disponible via le réseau de distributeurs agréés Casselin en France et en Europe.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chr-visual" aria-hidden="true">
+          <img
+            src="https://www.casselin.com/13946-large_default/armoire-negative-200-l-blanche.jpg"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PRODUITS SIMILAIRES ──────────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <p class="section-label">Gamme</p>
+      <h2 class="section-title">Produits similaires</h2>
+      <!--
+        Les titres ci-dessous sont extraits des slugs d'URL présents dans le JSON.
+        Aucun titre n'a été inventé : ils correspondent à la nomenclature de l'URL
+        telle que fournie par casselin.com.
+      -->
+      <div class="related-grid">
+
+        <a href="https://www.casselin.com/fr/37312-armoire-negative-546-l-inox-3611630083096.html" class="related-card">
+          <div class="related-card-body">
+            <div class="related-card-label">Armoire négative</div>
+            <div class="related-card-name">Armoire négative 546 L Inox</div>
+            <span class="related-card-link">
+              Voir le produit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="https://www.casselin.com/fr/37310-armoire-negative-400-l-inox-3611630083072.html" class="related-card">
+          <div class="related-card-body">
+            <div class="related-card-label">Armoire négative</div>
+            <div class="related-card-name">Armoire négative 400 L Inox</div>
+            <span class="related-card-link">
+              Voir le produit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="https://www.casselin.com/fr/38822-armoire-negative-235-l-inox-3611630101295.html" class="related-card">
+          <div class="related-card-body">
+            <div class="related-card-label">Armoire négative</div>
+            <div class="related-card-name">Armoire négative 235 L Inox</div>
+            <span class="related-card-link">
+              Voir le produit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="https://www.casselin.com/fr/37314-armoire-negative-600-l-blanche-3611630083102.html" class="related-card">
+          <div class="related-card-body">
+            <div class="related-card-label">Armoire négative</div>
+            <div class="related-card-name">Armoire négative 600 L Blanche</div>
+            <span class="related-card-link">
+              Voir le produit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="https://www.casselin.com/fr/38869-armoire-negative-200-l-inox-3611630101721.html" class="related-card">
+          <div class="related-card-body">
+            <div class="related-card-label">Armoire négative</div>
+            <div class="related-card-name">Armoire négative 200 L Inox</div>
+            <span class="related-card-link">
+              Voir le produit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="https://www.casselin.com/fr/37309-armoire-negative-1255-l-inox-3611630083065.html" class="related-card">
+          <div class="related-card-body">
+            <div class="related-card-label">Armoire négative</div>
+            <div class="related-card-name">Armoire négative 1255 L Inox</div>
+            <span class="related-card-link">
+              Voir le produit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══════════════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-logo">Casselin</span>
+        <span class="footer-copy">Prototype de fiche produit premium — données issues de casselin.com</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
